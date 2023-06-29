@@ -26,11 +26,10 @@ d3.json(url).then(function(response) {
     return sampleArray
     };
 
-    //3.  defualt data and charts
-    let default_index =0
+    //3.  build a function getData() to getData for chart and a function getChart
 
     function getData(index){
-        let sample_array = samples_data[index];
+        let sample_array = valueSort(samples_data[index]);
         return {
         bar:function(){let data ={
             type:"bar",
@@ -59,11 +58,7 @@ d3.json(url).then(function(response) {
     function getCharts(index){
         /// horizontal chart
         /*  Create a horizontal bar chart with a dropdown menu to 
-        display the top 10 OTUs found in that individual.
-        Use sample_values as the values for the bar chart.
-        Use otu_ids as the labels for the bar chart.
-        Use otu_labels as the hovertext for the chart.*/
-
+        display the top 10 OTUs found in that individual.*/
        
         let data =[getData(index).bar()]
         let layout = {
@@ -104,11 +99,10 @@ d3.json(url).then(function(response) {
         dropdownContainer.append("option").attr("value",id).text(id)
     };
 
-    // Call optionChanged() when a change takes place to the DOM
+    /// Call optionChanged() when a change takes place to the DOM
     d3.selectAll("#selDataset").on("change", optionChanged);
 
-
-    // Function called by DOM changes
+    /// Function called by DOM changes
     function optionChanged() {
         // Retrieve the selected value from the dropdown menu
         let dropdownMenu = d3.select("#selDataset");
@@ -142,5 +136,7 @@ d3.json(url).then(function(response) {
 
     };
     console.log(samples_data[2].id)
+
+  //5. show the default data (first array in data)
   getCharts(0);
 });
